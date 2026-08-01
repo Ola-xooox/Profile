@@ -1,0 +1,106 @@
+---
+// Web5IdentityBadge.astro - White Background Terminal Widget displaying Cryptographic DID Payload
+import { profileData } from '../data/profile';
+---
+
+<div class="terminal-window p-5 relative overflow-hidden border border-neutral-300 shadow-xl rounded-xl bg-white text-black">
+  <!-- Terminal Top Bar -->
+  <div class="flex items-center justify-between pb-3 mb-4 border-b border-neutral-200 text-xs text-neutral-600 font-mono">
+    <div class="flex items-center gap-2">
+      <div class="flex gap-1.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-neutral-300 inline-block"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-neutral-500 inline-block"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-black inline-block"></span>
+      </div>
+      <span class="ml-2 text-black font-bold">identity.web5.dwn --did-status</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded bg-black text-white font-bold border border-black">
+        <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+        DID_ACTIVE
+      </span>
+    </div>
+  </div>
+
+  <!-- Terminal Content Body -->
+  <div class="space-y-3 font-mono text-xs text-neutral-800">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-2.5 rounded bg-neutral-50 border border-neutral-300">
+      <span class="text-black font-extrabold">// DECENTRALIZED IDENTIFIER (DID)</span>
+      <div class="flex items-center gap-2">
+        <code class="text-black bg-white px-2 py-1 rounded text-[11px] select-all border border-neutral-300 font-bold truncate max-w-[280px] sm:max-w-none">
+          {profileData.did}
+        </code>
+        <button 
+          id="copy-did-btn"
+          class="px-2 py-1 text-[10px] bg-black text-white font-bold hover:bg-neutral-800 rounded border border-black transition-all active:scale-95"
+          title="Copy DID URI to clipboard"
+        >
+          COPY
+        </button>
+      </div>
+    </div>
+
+    <!-- Cryptographic Identity Specs -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-[11px]">
+      <div class="p-2 rounded bg-neutral-50 border border-neutral-200">
+        <span class="text-neutral-500 font-bold">KEY_TYPE:</span> 
+        <span class="text-black font-bold ml-1">Ed25519 Verification Key</span>
+      </div>
+      <div class="p-2 rounded bg-neutral-50 border border-neutral-200">
+        <span class="text-neutral-500 font-bold">DWN_NODE:</span> 
+        <span class="text-black font-bold ml-1">ph-south-asia.dwn.net</span>
+      </div>
+      <div class="p-2 rounded bg-neutral-50 border border-neutral-200">
+        <span class="text-neutral-500 font-bold">PUBLIC_KEY_THUMBPRINT:</span> 
+        <span class="text-black ml-1 font-mono text-[10px] font-bold truncate block sm:inline">
+          {profileData.developer.publicKey.substring(0, 20)}...
+        </span>
+      </div>
+      <div class="p-2 rounded bg-neutral-50 border border-neutral-200">
+        <span class="text-neutral-500 font-bold">VC_CREDENTIALS:</span> 
+        <span class="text-black font-black ml-1">2 Signatures Verified</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Trigger Footer -->
+  <div class="mt-4 pt-3 border-t border-neutral-200 flex items-center justify-between">
+    <span class="text-[10px] font-mono text-neutral-500 font-medium">
+      SHA256: 7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1f
+    </span>
+    <button
+      id="open-web5-drawer-btn"
+      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-black text-white hover:bg-neutral-800 border border-black shadow-md transition-all active:scale-95"
+    >
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+      </svg>
+      INSPECT WEB5 VC SCHEMA
+    </button>
+  </div>
+</div>
+
+<script>
+  import { profileData } from '../data/profile';
+
+  function setupIdentityBadge() {
+    const copyBtn = document.getElementById('copy-did-btn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(profileData.did);
+        const originalText = copyBtn.innerText;
+        copyBtn.innerText = 'COPIED!';
+        setTimeout(() => {
+          copyBtn.innerText = originalText;
+        }, 2000);
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupIdentityBadge);
+  } else {
+    setupIdentityBadge();
+  }
+</script>

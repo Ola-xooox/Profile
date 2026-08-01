@@ -1,0 +1,91 @@
+---
+// ProjectsSection.astro - Section 03: Full-Width Dark Cyber Charcoal Section
+import { profileData } from '../data/profile';
+import ProjectCard from './ProjectCard.astro';
+---
+
+<section id="projects" class="relative z-10 w-full bg-neutral-900/95 backdrop-blur-xl border-t border-b border-neutral-800 py-16 px-4 sm:px-8 lg:px-16 text-white overflow-hidden">
+  <!-- Section 03 Dedicated Background Artwork -->
+  <div class="absolute inset-0 opacity-40 pointer-events-none mix-blend-screen">
+    <img src="/dark_bg.png" alt="Projects Dark Cyber Background" class="w-full h-full object-cover" />
+  </div>
+
+  <div class="relative z-10 w-full max-w-7xl mx-auto">
+    <!-- Section Title Header -->
+    <div class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-neutral-800 pb-8">
+      <div class="space-y-3">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white text-black font-mono text-xs font-extrabold">
+          <span class="w-1.5 h-1.5 rounded-full bg-black"></span>
+          <span>Projects</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-black text-white font-mono tracking-tight uppercase">
+          My <span class="text-neutral-400">Projects</span> & Apps
+        </h2>
+        <p class="text-neutral-300 text-sm max-w-2xl font-medium">
+          Real-world software I built from scratch — covering backend APIs, databases, and full frontend interfaces.
+        </p>
+      </div>
+
+      <!-- Filter Buttons -->
+      <div class="flex flex-wrap gap-2 font-mono text-xs">
+        <button class="project-filter-btn active px-3.5 py-1.5 rounded-lg bg-white text-black border border-white font-bold shadow-sm" data-filter="all">
+          All ({profileData.projects.length})
+        </button>
+        <button class="project-filter-btn px-3.5 py-1.5 rounded-lg bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-700 font-bold" data-filter="laravel">
+          Laravel
+        </button>
+        <button class="project-filter-btn px-3.5 py-1.5 rounded-lg bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-700 font-bold" data-filter="react">
+          React
+        </button>
+        <button class="project-filter-btn px-3.5 py-1.5 rounded-lg bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-700 font-bold" data-filter="php">
+          PHP
+        </button>
+      </div>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+      {profileData.projects.map((project) => (
+        <div class="project-item-wrapper" data-tags={project.tags.join(',').toLowerCase()}>
+          <ProjectCard project={project} />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  function setupProjectFilters() {
+    const filterBtns = document.querySelectorAll('.project-filter-btn');
+    const projectWrappers = document.querySelectorAll('.project-item-wrapper');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter')?.toLowerCase();
+        if (!filter) return;
+
+        filterBtns.forEach(b => {
+          b.classList.remove('bg-white', 'text-black', 'border-white', 'shadow-sm');
+          b.classList.add('bg-neutral-800', 'text-neutral-300', 'border-neutral-700');
+        });
+        btn.classList.add('bg-white', 'text-black', 'border-white', 'shadow-sm');
+        btn.classList.remove('bg-neutral-800', 'text-neutral-300');
+
+        projectWrappers.forEach(wrapper => {
+          const tags = wrapper.getAttribute('data-tags') || '';
+          if (filter === 'all' || tags.includes(filter)) {
+            (wrapper as HTMLElement).style.display = 'block';
+          } else {
+            (wrapper as HTMLElement).style.display = 'none';
+          }
+        });
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupProjectFilters);
+  } else {
+    setupProjectFilters();
+  }
+</script>

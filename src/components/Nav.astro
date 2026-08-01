@@ -1,0 +1,134 @@
+---
+// Nav.astro - White Background Sticky Navigation Bar with Active Scrollspy
+import { profileData } from '../data/profile';
+---
+
+<header class="sticky top-0 z-40 w-full transition-all duration-500 backdrop-blur-xl bg-white/90 border-b border-neutral-200 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <!-- Brand / Initials Badge -->
+    <a href="#hero" class="flex items-center gap-3 group">
+      <div class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-black p-[1px] shadow-md group-hover:scale-105 transition-transform">
+        <div class="w-full h-full bg-black rounded-[11px] flex items-center justify-center font-mono font-black text-sm text-white">
+          {profileData.developer.initials}
+        </div>
+      </div>
+      <div>
+        <span class="font-mono text-sm font-black text-black group-hover:text-neutral-700 transition-colors block leading-none">
+          {profileData.developer.name}
+        </span>
+        <span class="font-mono text-[10px] text-neutral-600 font-bold tracking-wider block mt-1">
+          {profileData.developer.role}
+        </span>
+      </div>
+    </a>
+
+    <!-- Desktop Nav Links -->
+    <nav class="hidden md:flex items-center gap-8 font-mono text-xs">
+      <a href="#hero" data-nav-section="hero" class="nav-link text-neutral-800 hover:text-black transition-all py-1 relative font-bold">
+        About
+      </a>
+      <a href="#skills" data-nav-section="skills" class="nav-link text-neutral-800 hover:text-black transition-all py-1 relative font-bold">
+        Skills
+      </a>
+      <a href="#projects" data-nav-section="projects" class="nav-link text-neutral-800 hover:text-black transition-all py-1 relative font-bold">
+        Projects
+      </a>
+      <a href="#contact" data-nav-section="contact" class="nav-link text-neutral-800 hover:text-black transition-all py-1 relative font-bold">
+        Contact
+      </a>
+    </nav>
+
+    <!-- Right Action Items -->
+    <div class="flex items-center gap-4">
+      <!-- Status Badge -->
+      <div class="hidden lg:flex items-center gap-2 px-3 py-1 rounded-full bg-black text-white text-xs font-mono">
+        <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+        <span class="text-[11px] font-extrabold">Available for work</span>
+      </div>
+
+      <!-- DID Quick Hash -->
+      <button 
+        id="nav-did-inspect-btn"
+        class="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-black text-white text-xs font-mono font-bold hover:bg-neutral-800 border border-black shadow-sm transition-all active:scale-95"
+      >
+        <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+        <span>Identity</span>
+      </button>
+
+      <!-- Mobile Menu Button -->
+      <button 
+        id="mobile-menu-toggle"
+        class="md:hidden p-2 rounded-lg bg-neutral-100 text-black border border-neutral-300"
+        aria-label="Toggle Navigation Menu"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Dropdown Menu -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-neutral-200 bg-white/95 backdrop-blur-2xl px-4 py-4 space-y-3 font-mono text-sm">
+    <a href="#hero" class="mobile-nav-link block py-2 text-neutral-800 hover:text-black font-bold border-b border-neutral-100">About</a>
+    <a href="#skills" class="mobile-nav-link block py-2 text-neutral-800 hover:text-black font-bold border-b border-neutral-100">Skills</a>
+    <a href="#projects" class="mobile-nav-link block py-2 text-neutral-800 hover:text-black font-bold border-b border-neutral-100">Projects</a>
+    <a href="#contact" class="mobile-nav-link block py-2 text-neutral-800 hover:text-black font-bold">Contact</a>
+  </div>
+</header>
+
+<script>
+  function setupNav() {
+    const mobileToggle = document.getElementById('mobile-menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    const navDidBtn = document.getElementById('nav-did-inspect-btn');
+    const openWeb5Btn = document.getElementById('open-web5-drawer-btn');
+
+    if (mobileToggle && mobileMenu) {
+      mobileToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+      mobileNavLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+        });
+      });
+    }
+
+    if (navDidBtn && openWeb5Btn) {
+      navDidBtn.addEventListener('click', () => {
+        openWeb5Btn.click();
+      });
+    }
+
+    // Scrollspy active section observer
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('[data-nav-section]');
+
+    const scrollspyObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            if (link.getAttribute('data-nav-section') === id) {
+              link.classList.add('text-black', 'underline', 'underline-offset-8', 'decoration-2');
+              link.classList.remove('text-neutral-800');
+            } else {
+              link.classList.remove('text-black', 'underline', 'underline-offset-8', 'decoration-2');
+              link.classList.add('text-neutral-800');
+            }
+          });
+        }
+      });
+    }, { threshold: 0.3 });
+
+    sections.forEach(sec => scrollspyObserver.observe(sec));
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupNav);
+  } else {
+    setupNav();
+  }
+</script>

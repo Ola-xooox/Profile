@@ -1,0 +1,100 @@
+---
+// Layout.astro - Base Layout with Lenis Scroll, Fonts & Scroll Reveal IntersectionObserver
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = "Lhandel Vicente Pamisa | Full-Stack & Web5 Systems Developer",
+  description = "Senior Full-Stack Developer portfolio for Lhandel Vicente Pamisa. Specialized in Laravel, PHP, React, Vue, MySQL schema design, REST APIs, and Web5 decentralized architectures."
+} = Astro.props;
+---
+
+<!html>
+<html lang="en" class="light scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO Meta Tags -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Lhandel Vicente Pamisa" />
+    <meta name="keywords" content="Lhandel Vicente Pamisa, Full-Stack Developer, PHP, Laravel, React, Vue, MySQL, Web5, DID, DWN, Philippines Developer" />
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="Lhandel Vicente Pamisa Portfolio" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  </head>
+  <body class="bg-white text-black antialiased selection:bg-black selection:text-white">
+    <slot />
+
+    <!-- Lenis Smooth Scroll & IntersectionObserver Scroll Reveal Script -->
+    <script>
+      import Lenis from 'lenis';
+
+      function initScrollEffects() {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Initialize Lenis Smooth Scroll
+        if (!prefersReducedMotion) {
+          const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            touchMultiplier: 2,
+            infinite: false,
+          });
+
+          function raf(time: number) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+          }
+
+          requestAnimationFrame(raf);
+        }
+
+        // Initialize IntersectionObserver for Scroll Reveal Transitions
+        const observerOptions = {
+          root: null,
+          rootMargin: '0px 0px -80px 0px',
+          threshold: 0.1
+        };
+
+        const revealObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-revealed');
+            }
+          });
+        }, observerOptions);
+
+        // Target all elements with .reveal-on-scroll class or sections
+        const revealElements = document.querySelectorAll('.reveal-on-scroll, section');
+        revealElements.forEach((el) => {
+          if (!el.classList.contains('reveal-on-scroll')) {
+            el.classList.add('reveal-on-scroll');
+          }
+          revealObserver.observe(el);
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initScrollEffects);
+      } else {
+        initScrollEffects();
+      }
+    </script>
+  </body>
+</html>

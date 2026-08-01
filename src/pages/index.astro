@@ -1,0 +1,33 @@
+---
+// index.astro - Full-Width Edge-To-Edge Scroll Gradient Descent
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import HeroSection from '../components/HeroSection.astro';
+import SkillsSection from '../components/SkillsSection.astro';
+import ProjectsSection from '../components/ProjectsSection.astro';
+import ContactSection from '../components/ContactSection.astro';
+import Web5InspectorDrawer from '../components/Web5InspectorDrawer.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Lhandel Vicente Pamisa | Full-Stack & Web5 Systems Developer">
+  <!-- Content Container with Progressive Darkening Gradient Background -->
+  <div class="relative z-10 flex flex-col min-h-screen bg-gradient-to-b from-white via-neutral-200 via-neutral-900 to-black overflow-x-hidden">
+    <!-- Sticky Navigation -->
+    <Nav />
+
+    <!-- Main Content Sections - Seamless Full-Width Edge-To-Edge Layout -->
+    <main class="flex-grow w-full">
+      <HeroSection />
+      <SkillsSection />
+      <ProjectsSection />
+      <ContactSection />
+    </main>
+
+    <!-- Deep Space Footer -->
+    <Footer />
+  </div>
+
+  <!-- Interactive Web5 VC Inspector Drawer Modal -->
+  <Web5InspectorDrawer />
+</Layout>

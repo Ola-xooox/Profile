@@ -1,0 +1,168 @@
+---
+// WaveCanvas.astro - Light Mode WebGL Three.js Wave Shader Canvas (White Canvas + Dark Mesh)
+---
+
+<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-white">
+  <canvas id="webgl-wave-canvas" class="w-full h-full opacity-60"></canvas>
+  <div class="absolute inset-0 bg-radial-gradient from-transparent via-white/80 to-white pointer-events-none"></div>
+</div>
+
+<script>
+  import * as THREE from 'three';
+
+  function initWaveCanvas() {
+    const canvas = document.getElementById('webgl-wave-canvas') as HTMLCanvasElement;
+    if (!canvas) return;
+
+    // Check prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Scene setup
+    const scene = new THREE.Scene();
+
+    const camera = new THREE.PerspectiveCamera(
+      60,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      100
+    );
+    camera.position.set(0, 12, 18);
+    camera.lookAt(0, 0, -2);
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: true,
+      powerPreference: 'high-performance'
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    // Plane geometry with custom vertex wave shader
+    const geometry = new THREE.PlaneGeometry(45, 35, 90, 70);
+    geometry.rotateX(-Math.PI / 2.3);
+
+    // Custom Light Mode Shader Material
+    const customShaderMaterial = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+        uColorA: { value: new THREE.Color('#FFFFFF') },
+        uColorB: { value: new THREE.Color('#E5E5E5') },
+        uColorC: { value: new THREE.Color('#737373') },
+        uColorD: { value: new THREE.Color('#000000') }
+      },
+      vertexShader: `
+        uniform float uTime;
+        varying vec2 vUv;
+        varying float vElevation;
+
+        void main() {
+          vUv = uv;
+          vec3 pos = position;
+
+          // Wave calculations
+          float wave1 = sin(pos.x * 0.3 + uTime * 0.8) * 0.8;
+          float wave2 = cos(pos.y * 0.4 + uTime * 0.6) * 0.9;
+          float wave3 = sin((pos.x + pos.y) * 0.2 + uTime * 1.1) * 0.5;
+
+          pos.z += wave1 + wave2 + wave3;
+          vElevation = pos.z;
+
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 uColorA;
+        uniform vec3 uColorB;
+        uniform vec3 uColorC;
+        uniform vec3 uColorD;
+        varying vec2 vUv;
+        varying float vElevation;
+
+        void main() {
+          float mixFactor1 = smoothstep(-1.5, 1.5, vElevation);
+          float mixFactor2 = smoothstep(0.0, 2.0, vElevation);
+
+          vec3 color = mix(uColorA, uColorB, mixFactor1);
+          color = mix(color, uColorC, mixFactor2 * 0.7);
+
+          // Add dark contrast highlights at wave peaks
+          if (vElevation > 1.2) {
+            color = mix(color, uColorD, (vElevation - 1.2) * 0.5);
+          }
+
+          // Edge fade out for smooth integration with white background
+          float edgeAlpha = smoothstep(0.0, 0.2, vUv.x) * smoothstep(1.0, 0.8, vUv.x) *
+                            smoothstep(0.0, 0.2, vUv.y) * smoothstep(1.0, 0.8, vUv.y);
+
+          gl_FragColor = vec4(color, 0.45 * edgeAlpha);
+        }
+      `,
+      wireframe: true,
+      transparent: true
+    });
+
+    const waveMesh = new THREE.Mesh(geometry, customShaderMaterial);
+    scene.add(waveMesh);
+
+    // Animation Loop with throttling on background tabs
+    let animationFrameId: number;
+    let clock = new THREE.Clock();
+    let isTabActive = true;
+
+    function animate() {
+      if (!isTabActive || prefersReducedMotion) {
+        return;
+      }
+
+      const elapsedTime = clock.getElapsedTime();
+      customShaderMaterial.uniforms.uTime.value = elapsedTime;
+
+      // Gentle mesh rotation
+      waveMesh.rotation.z = Math.sin(elapsedTime * 0.1) * 0.05;
+
+      renderer.render(scene, camera);
+      animationFrameId = requestAnimationFrame(animate);
+    }
+
+    // Tab visibility handling (GPU frame throttling)
+    function handleVisibilityChange() {
+      if (document.hidden) {
+        isTabActive = false;
+        if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      } else {
+        isTabActive = true;
+        clock.start();
+        animate();
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // Window resize handler
+    function handleResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      if (!prefersReducedMotion && isTabActive) {
+        renderer.render(scene, camera);
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+
+    // Initial render
+    renderer.render(scene, camera);
+    if (!prefersReducedMotion) {
+      animate();
+    }
+  }
+
+  // Run on DOM load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initWaveCanvas);
+  } else {
+    initWaveCanvas();
+  }
+</script>

@@ -1,0 +1,114 @@
+---
+// HeroSection.astro - Section 01: Full-Width Edge-To-Edge Hero Section
+import { profileData } from '../data/profile';
+import Web5IdentityBadge from './Web5IdentityBadge.astro';
+---
+
+<section id="hero" class="relative z-10 w-full bg-white/90 backdrop-blur-xl border-b border-neutral-200 py-12 px-4 sm:px-8 lg:px-16 min-h-[85vh] flex items-center overflow-hidden">
+  <!-- Dedicated Background Artwork (Edge-To-Edge) -->
+  <div class="absolute inset-0 pointer-events-none z-0">
+    <img src="/hero_bg.png" alt="Hero Liquid Chrome Background" class="w-full h-full object-cover opacity-35 mix-blend-multiply" />
+    <div class="absolute inset-0 cyber-grid opacity-20"></div>
+  </div>
+
+  <div class="relative z-10 w-full max-w-7xl mx-auto">
+    <!-- Top Metadata Header -->
+    <div class="flex items-center justify-between pb-6 mb-8 border-b border-neutral-200 font-mono text-xs text-neutral-500 font-bold">
+      <span class="tracking-widest uppercase text-black">{profileData.developer.initials}</span>
+      <span class="hidden sm:inline-block tracking-wider text-black">Full-Stack Developer</span>
+      <div class="flex items-center gap-4">
+        <span>2026</span>
+        <span class="px-2 py-0.5 rounded bg-black text-white text-[10px]">Verified</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+      <!-- Left Column: Bio & Headline -->
+      <div class="lg:col-span-6 space-y-6">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl sm:text-5xl font-black text-black font-mono">01</span>
+          <div class="h-8 w-[2px] bg-black"></div>
+          <div>
+            <span class="text-xs font-mono font-bold block text-black uppercase tracking-wider">Digital Identity</span>
+            <span class="text-xs font-mono text-neutral-500 block">{profileData.did}</span>
+          </div>
+        </div>
+
+        <!-- Main Brutalist Headline -->
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-black tracking-tight leading-none uppercase font-mono">
+          Developer <br/>
+          <span class="text-neutral-500">Architect</span>
+        </h1>
+
+        <p class="text-neutral-800 text-base sm:text-lg leading-relaxed max-w-xl font-medium">
+          {profileData.developer.bio}
+        </p>
+
+        <!-- Technical Badges -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 font-mono text-xs">
+          <div class="p-3.5 rounded-xl bg-neutral-100 border border-neutral-300 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-black"></span>
+            <span class="text-black font-bold">Laravel & PHP</span>
+          </div>
+          <div class="p-3.5 rounded-xl bg-neutral-100 border border-neutral-300 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-black"></span>
+            <span class="text-black font-bold">React & Vue</span>
+          </div>
+          <div class="p-3.5 rounded-xl bg-neutral-100 border border-neutral-300 flex items-center gap-2 col-span-2 sm:col-span-1">
+            <span class="w-2 h-2 rounded-full bg-black"></span>
+            <span class="text-black font-bold">MySQL & Web5</span>
+          </div>
+        </div>
+
+        <!-- Action CTAs -->
+        <div class="flex flex-wrap items-center gap-4 pt-4 font-mono text-xs">
+          <a 
+            href="#projects" 
+            class="px-7 py-4 rounded-xl font-black bg-black text-white hover:bg-neutral-800 shadow-xl transition-all active:scale-95 flex items-center gap-2"
+          >
+            <span>View Projects</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </a>
+
+          <a 
+            href="#contact" 
+            class="px-7 py-4 rounded-xl font-black bg-neutral-100 text-black hover:bg-neutral-200 border border-neutral-300 hover:border-black transition-all active:scale-95 flex items-center gap-2"
+          >
+            <span>Get in Touch</span>
+            <svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Column: Cybernetic Portrait Artwork & DID Terminal Badge -->
+      <div class="lg:col-span-6 space-y-6">
+        <!-- Integrated Cybernetic Artwork Display -->
+        <div class="relative rounded-2xl overflow-hidden border border-neutral-300 bg-neutral-100 shadow-md group">
+          <img 
+            src="/cyber_portrait.png" 
+            alt="Futuristic Cybernetic Artwork" 
+            class="w-full h-56 sm:h-64 object-cover group-hover:scale-105 transition-transform duration-700"
+          />
+          <div class="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/80 to-transparent text-white font-mono text-xs flex justify-between items-end">
+            <div>
+              <span class="block text-[10px] text-neutral-400">Developer</span>
+              <span class="font-extrabold text-white">LHANDEL VICENTE PAMISA</span>
+            </div>
+            <span class="px-2 py-1 bg-white text-black font-extrabold rounded text-[10px]">
+              Open to work
+            </span>
+          </div>
+        </div>
+
+        <!-- Terminal Badge -->
+        <Web5IdentityBadge />
+      </div>
+    </div>
+
+    <!-- Bottom Metadata Footer -->
+    <div class="mt-8 pt-4 border-t border-neutral-200 flex flex-col sm:flex-row items-center justify-between text-[11px] font-mono text-neutral-500">
+      <span>Full ownership from database to frontend</span>
+      <span>Available: {profileData.developer.availability}</span>
+    </div>
+  </div>
+</section>

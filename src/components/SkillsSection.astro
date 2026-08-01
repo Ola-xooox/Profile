@@ -1,0 +1,51 @@
+---
+// SkillsSection.astro - Section 02: Full-Width Metallic Silver Section
+import { profileData } from '../data/profile';
+import SchemaCard from './SchemaCard.astro';
+
+const categoryLabels: Record<string, { tableName: string; badge: string; pk: string }> = {
+  backend_and_apis: { tableName: "Backend", badge: "Backend", pk: "backend" },
+  frontend_and_ui_ux: { tableName: "Frontend", badge: "Frontend", pk: "frontend" },
+  databases_and_modeling: { tableName: "Databases", badge: "Database", pk: "database" },
+  devops_os_and_deploy: { tableName: "DevOps & Deployment", badge: "DevOps", pk: "devops" },
+  hardware_and_it_support: { tableName: "Hardware & IT", badge: "Hardware", pk: "hardware" }
+};
+---
+
+<section id="skills" class="relative z-10 w-full bg-neutral-100/95 backdrop-blur-xl border-t border-b border-neutral-300 py-16 px-4 sm:px-8 lg:px-16 overflow-hidden">
+  <!-- Section 02 Dedicated Background Artwork -->
+  <div class="absolute inset-0 opacity-20 pointer-events-none mix-blend-multiply">
+    <img src="/section_bg.png" alt="Skills Section Background Artwork" class="w-full h-full object-cover" />
+  </div>
+
+  <div class="relative z-10 w-full max-w-7xl mx-auto">
+    <!-- Section Title Header -->
+    <div class="mb-12 space-y-3">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black text-white font-mono text-xs font-extrabold">
+        <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+        <span>Skills</span>
+      </div>
+      <h2 class="text-3xl sm:text-4xl font-black text-black font-mono tracking-tight uppercase">
+        My <span class="text-gradient-cyber">Skills</span> & Tech Stack
+      </h2>
+      <p class="text-neutral-700 text-sm max-w-2xl font-medium">
+        A breakdown of my technical skills across backend, frontend, databases, and infrastructure.
+      </p>
+    </div>
+
+    <!-- Holographic Schema Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {Object.entries(profileData.skills).map(([categoryKey, items]) => {
+        const config = categoryLabels[categoryKey] || { tableName: categoryKey, badge: "Schema", pk: "id_pk" };
+        return (
+          <SchemaCard 
+            tableName={config.tableName}
+            categoryName={config.badge}
+            primaryKey={config.pk}
+            items={items}
+          />
+        );
+      })}
+    </div>
+  </div>
+</section>
