@@ -93,7 +93,10 @@ import { profileData } from '../data/profile';
             <span class="text-neutral-500 text-[10px] font-bold">Secure form</span>
           </div>
 
-          <form action="/api/send-email" method="POST" id="contact-transmission-form" class="space-y-4 font-mono text-xs">
+          <form action="https://api.web3forms.com/submit" method="POST" id="contact-transmission-form" class="space-y-4 font-mono text-xs">
+            <input type="hidden" name="access_key" value="c586a67f-4cb2-4884-afe2-22201014e7d4" />
+            <input type="hidden" name="to_email" value="lhandelpamisa0@gmail.com" />
+            <input type="hidden" name="subject" value="📬 New Client Inquiry for Lhandel" />
 
             <div>
               <label class="block text-neutral-700 font-bold mb-1.5">Your Name</label>
