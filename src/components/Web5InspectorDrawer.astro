@@ -22,10 +22,10 @@ import { profileData } from '../data/profile';
         </div>
         <div>
           <h3 class="font-mono text-base font-bold text-black flex items-center gap-2">
-            WEB5_DECENTRALIZED_IDENTITY_INSPECTOR
+            Identity & Skill Verification
           </h3>
           <p class="text-xs text-neutral-600 font-mono">
-            DID Protocol: DWN / Verifiable Credentials & Skill Hashes
+            Verified Developer Credentials & Security Proofs
           </p>
         </div>
       </div>
@@ -47,19 +47,19 @@ import { profileData } from '../data/profile';
         data-drawer-tab="vcs" 
         class="drawer-tab-btn active px-6 py-3 border-b-2 border-black text-black font-bold bg-white transition-all"
       >
-        Verifiable Credentials ({profileData.verifiableCredentials.length})
+        Verified Skills ({profileData.verifiableCredentials.length})
       </button>
       <button 
         data-drawer-tab="raw-did" 
         class="drawer-tab-btn px-6 py-3 border-b-2 border-transparent text-neutral-600 hover:text-black transition-all"
       >
-        Raw JSON-LD DID Schema
+        Developer Data (JSON)
       </button>
       <button 
         data-drawer-tab="proofs" 
         class="drawer-tab-btn px-6 py-3 border-b-2 border-transparent text-neutral-600 hover:text-black transition-all"
       >
-        Cryptographic Proof Status
+        Security Status
       </button>
     </div>
 
@@ -73,19 +73,19 @@ import { profileData } from '../data/profile';
               <span class="px-2.5 py-1 rounded bg-black text-white text-[11px] font-bold">
                 {vc.type}
               </span>
-              <span class="text-neutral-500 text-[11px] font-bold">ISSUED: {vc.issuanceDate.split('T')[0]}</span>
+              <span class="text-neutral-500 text-[11px] font-bold">Issued: {vc.issuanceDate.split('T')[0]}</span>
             </div>
             <div class="text-neutral-800">
-              <span class="text-neutral-500 font-bold">ISSUER_DID:</span> <span class="text-black font-bold">{vc.issuer}</span>
+              <span class="text-neutral-500 font-bold">Issuer:</span> <span class="text-black font-bold">{vc.issuer}</span>
             </div>
             <div class="p-3 rounded bg-white border border-neutral-300 text-black font-semibold">
-              <span class="text-black font-extrabold">CLAIM:</span> "{vc.credentialSubject.claim}"
+              <span class="text-black font-extrabold">Skill:</span> "{vc.credentialSubject.claim}"
             </div>
             <div class="flex items-center justify-between text-[10px] text-neutral-600 bg-neutral-100 px-3 py-1.5 rounded font-bold">
-              <span>PROOF_HASH: {vc.credentialSubject.proofHash}</span>
+              <span>Proof ID: {vc.credentialSubject.proofHash.substring(0, 16)}...</span>
               <span class="text-black font-extrabold flex items-center gap-1">
                 <span class="w-1.5 h-1.5 rounded-full bg-black"></span>
-                VERIFIED_VALID
+                Verified
               </span>
             </div>
           </div>
@@ -105,7 +105,7 @@ import { profileData } from '../data/profile';
             developer: profileData.developer,
             skillCategoriesCount: Object.keys(profileData.skills).length,
             projectsCount: profileData.projects.length,
-            verificationStatus: "AUTHENTICATED_SECURE"
+            verificationStatus: "Verified"
           }, null, 2)}</pre>
         </div>
       </div>
@@ -113,23 +113,23 @@ import { profileData } from '../data/profile';
       <!-- Tab 3: Cryptographic Proof Status -->
       <div id="drawer-tab-content-proofs" class="hidden space-y-4">
         <div class="p-4 rounded-xl bg-neutral-50 border border-neutral-300 space-y-3">
-          <h4 class="text-sm font-black text-black mb-2">// ED25519 VERIFICATION KEY PROOF</h4>
+          <h4 class="text-sm font-black text-black mb-2">Security & Verification Key Status</h4>
           <div class="grid grid-cols-2 gap-3 text-[11px]">
             <div class="p-2 rounded bg-white border border-neutral-200">
-              <span class="text-neutral-500 font-bold">SIGNATURE_ALGORITHM:</span>
+              <span class="text-neutral-500 font-bold">Algorithm:</span>
               <span class="text-black font-extrabold block mt-1">Ed25519-2026</span>
             </div>
             <div class="p-2 rounded bg-white border border-neutral-200">
-              <span class="text-neutral-500 font-bold">NONCE_CHALLENGE:</span>
+              <span class="text-neutral-500 font-bold">Challenge ID:</span>
               <span class="text-black font-bold block mt-1">0x9f38a102c89</span>
             </div>
             <div class="p-2 rounded bg-white border border-neutral-200">
-              <span class="text-neutral-500 font-bold">MERKLE_ROOT_HASH:</span>
+              <span class="text-neutral-500 font-bold">Hash Key:</span>
               <span class="text-black font-bold block mt-1">0xa4b19c83f120e</span>
             </div>
             <div class="p-2 rounded bg-white border border-neutral-200">
-              <span class="text-neutral-500 font-bold">DWN_SYNC_NODE:</span>
-              <span class="text-black font-black block mt-1">ONLINE / SYNCHRONIZED</span>
+              <span class="text-neutral-500 font-bold">Node Status:</span>
+              <span class="text-black font-black block mt-1">Online & Synchronized</span>
             </div>
           </div>
         </div>
@@ -139,13 +139,13 @@ import { profileData } from '../data/profile';
     <!-- Footer -->
     <div class="px-6 py-3 border-t border-neutral-200 bg-neutral-50 flex items-center justify-between text-xs font-mono">
       <span class="text-neutral-600">
-        SYSTEM STATUS: <span class="text-black font-extrabold">100% OPERATIONAL</span>
+        Status: <span class="text-black font-extrabold">Active</span>
       </span>
       <button 
         id="close-web5-drawer-footer-btn"
         class="px-4 py-1.5 rounded-lg bg-black text-white hover:bg-neutral-800 font-bold border border-black transition-all"
       >
-        CLOSE INSPECTOR
+        Close
       </button>
     </div>
   </div>
