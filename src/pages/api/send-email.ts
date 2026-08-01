@@ -1,8 +1,5 @@
 import type { APIRoute } from 'astro';
-import { Resend } from 'resend';
-
-const resendApiKey = process.env.RESEND_API_KEY || '';
-const resend = new Resend(resendApiKey);
+import nodemailer from 'nodemailer';
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -10,6 +7,14 @@ export const POST: APIRoute = async ({ request }) => {
     const name = formData.get('name')?.toString() || 'Anonymous Visitor';
     const email = formData.get('email')?.toString() || 'No email provided';
     const message = formData.get('message')?.toString() || 'No message content';
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'lhandelpamisa0@gmail.com',
+        pass: process.env.GMAIL_APP_PASSWORD || 'yafm elhg zuns kdns',
+      },
+    });
 
     const htmlContent = `
     <!DOCTYPE html>
@@ -36,7 +41,7 @@ export const POST: APIRoute = async ({ request }) => {
           .header {
             background-color: #000000;
             color: #ffffff;
-            padding: 32px 32px 24px 32px;
+            padding: 32px;
           }
           .header h1 {
             margin: 0;
@@ -91,8 +96,6 @@ export const POST: APIRoute = async ({ request }) => {
             font-size: 11px;
             color: #71717a;
             font-family: monospace;
-            display: flex;
-            justify-content: space-between;
           }
         </style>
       </head>
@@ -115,30 +118,22 @@ export const POST: APIRoute = async ({ request }) => {
           </div>
 
           <div class="footer">
-            <span>STATUS: DELIVERED</span>
-            <span>DATE: ${new Date().toLocaleDateString()}</span>
+            <span>STATUS: DELIVERED VIA NODEMAILER (GMAIL SMTP)</span>
           </div>
         </div>
       </body>
     </html>
     `;
 
-    const response = await resend.emails.send({
-      from: 'Portfolio <onboarding@resend.dev>',
+    await transporter.sendMail({
+      from: `"Lhandel Portfolio" <lhandelpamisa0@gmail.com>`,
       to: 'lhandelpamisa0@gmail.com',
       replyTo: email,
       subject: `📬 Portfolio Inquiry from ${name}`,
       html: htmlContent,
     });
 
-    if (response.error) {
-      return new Response(JSON.stringify({ success: false, error: response.error.message }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
-
-    return new Response(JSON.stringify({ success: true, id: response.data?.id }), {
+    return new Response(JSON.stringify({ success: true }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
