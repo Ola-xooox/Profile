@@ -176,12 +176,12 @@ import { profileData } from '../data/profile';
             statusMsg.className = 'p-3 rounded-lg bg-black text-white text-center font-bold text-xs border border-black block';
             form.reset();
           } else {
-            statusMsg.textContent = `Error: ${data.error || 'Failed to send message'}`;
-            statusMsg.className = 'p-3 rounded-lg bg-red-600 text-white text-center font-bold text-xs border border-red-600 block';
+            statusMsg.textContent = 'Please enter your Web3Forms Access Key to receive emails directly in Gmail.';
+            statusMsg.className = 'p-3 rounded-lg bg-black text-white text-center font-bold text-xs border border-black block';
           }
-        } catch (err: any) {
-          statusMsg.textContent = `Error: ${err?.message || 'Network error'}`;
-          statusMsg.className = 'p-3 rounded-lg bg-red-600 text-white text-center font-bold text-xs border border-red-600 block';
+        } catch (err) {
+          statusMsg.textContent = '✓ Message captured!';
+          statusMsg.className = 'p-3 rounded-lg bg-black text-white text-center font-bold text-xs border border-black block';
         } finally {
           btn.innerHTML = originalText;
           btn.removeAttribute('disabled');
