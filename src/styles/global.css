@@ -138,18 +138,21 @@
 .text-gradient-cyber {
   background: linear-gradient(135deg, #000000 0%, #333333 50%, #666666 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .text-gradient-cyan {
   background: linear-gradient(135deg, #000000 0%, #404040 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .text-gradient-violet {
   background: linear-gradient(135deg, #171717 0%, #737373 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
