@@ -10,7 +10,9 @@ export interface ProjectItem {
   title: string;
   description: string;
   tags: string[];
-  highlights: string[];
+  highlights?: string[];
+  architecture?: string[];
+  deliverables?: string[];
   demoUrl?: string;
   githubUrl?: string;
   schemaVersion?: string;
@@ -80,6 +82,7 @@ export const profileData: Web5Profile = {
     ],
     databases_and_modeling: [
       { name: "MySQL", type: "rdbms", vcHash: "0x31a9...88c3", verifiedAt: "2026-01-10" },
+      { name: "Supabase", type: "baas / postgres", vcHash: "0x55aa...99b2", verifiedAt: "2026-02-05" },
       { name: "Schema design", type: "core", vcHash: "0x66ff...22e4", verifiedAt: "2026-02-08" },
       { name: "Relational data modeling", type: "core", vcHash: "0x44dd...55a7", verifiedAt: "2026-02-22" },
       { name: "Query optimization", type: "perf", vcHash: "0x77ee...99b1", verifiedAt: "2026-03-18" }
@@ -104,9 +107,15 @@ export const profileData: Web5Profile = {
       title: "Learning Management System",
       description: "A comprehensive LMS with automated task scheduling and progress tracking for students.",
       tags: ["Laravel", "PHP", "Python", "MySQL", "Tailwind"],
-      highlights: [
+      architecture: [
         "Designed automated task priority scoring based on deadlines and difficulty metrics.",
-        "Structured complex relational database schemas for tracking student performance and schedules."
+        "Structured complex relational database schemas for tracking student performance and schedules.",
+        "Optimized backend queries for high-volume student progress tracking."
+      ],
+      deliverables: [
+        "Automated Task Priority Engine for intelligent deadline scheduling.",
+        "Relational Schema Architecture for performance analytics.",
+        "Student & Admin Dashboard with interactive performance tracking."
       ],
       demoUrl: "https://lms-demo.lhandel.dev",
       githubUrl: "https://github.com/lhandel-pamisa/learning-management-system",
@@ -116,10 +125,20 @@ export const profileData: Web5Profile = {
       id: "📚 0002",
       title: "Subject & Curriculum Management System",
       description: "An intuitive academic portal for organizing course curriculums and subject hierarchies.",
-      tags: ["React", "JavaScript", "REST APIs"],
-      highlights: [
-        "Built a highly dynamic, component-based dashboard interface with a responsive sidebar architecture.",
-        "Optimized frontend state management for seamless navigation through nested curriculum structures."
+      tags: ["Laravel", "PHP", "TailwindCSS", "MySQL", "REST APIs"],
+      architecture: [
+        "Laravel 12 & PHP 8.3: Secure backend framework using REST APIs and Eloquent ORM.",
+        "Fast MySQL Database: Optimized database queries and custom indexing for fast data loading.",
+        "Tailwind CSS & Vite: Modern UI design with quick page load speeds.",
+        "AI & Document Tools: Integrated Google Gemini, OpenAI, and PDF parsing engines.",
+        "Security & Biometrics: User authentication with role permissions and facial recognition 2FA."
+      ],
+      deliverables: [
+        "Curriculum Management: Flexible tools for managing subjects, prerequisites, and course versions.",
+        "AI Syllabus Reader: Automatically extracts PDF syllabus data into the system using AI.",
+        "PDF & ZIP Exporters: One-click exports for official academic documents and curriculum matrices.",
+        "Admin Dashboard: Easy-to-use portal for managing courses, grades, and school settings.",
+        "Activity Log: Automated tracking of changes and updates made across the system."
       ],
       demoUrl: "https://curriculum-portal.lhandel.dev",
       githubUrl: "https://github.com/lhandel-pamisa/subject-curriculum-system",
@@ -129,10 +148,16 @@ export const profileData: Web5Profile = {
       id: "💊 0003",
       title: "Pharmacy Management Application",
       description: "A web application for inventory and operations management tailored to pharmacy workflows.",
-      tags: ["PHP", "MySQL", "Nginx", "Hostinger"],
-      highlights: [
-        "Migrated application filesystems and established remote MySQL databases.",
-        "Configured server environment dependencies and database connection layers for live production."
+      tags: ["PHP", "MySQL", "TailwindCSS"],
+      architecture: [
+        "Implemented Multi-Tier OTP authentication & Admin Login Approval workflow.",
+        "Built modular POS, Inventory, and CMS portals with real-time activity logging.",
+        "Configured database connection layers & server environment for production."
+      ],
+      deliverables: [
+        "Implemented 2FA OTP security & Admin Approval workflow.",
+        "Built modular POS, Inventory, and CMS management portals.",
+        "Configured production environment & MySQL connection layers."
       ],
       demoUrl: "https://pharmacy-ops.lhandel.dev",
       githubUrl: "https://github.com/lhandel-pamisa/pharmacy-management-app",

@@ -43,8 +43,8 @@ import ProjectCard from './ProjectCard.astro';
       </div>
     </div>
 
-    <!-- Projects Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+    <!-- Projects Grid (Vertical Column Stack) -->
+    <div class="grid grid-cols-1 gap-8" id="projects-grid">
       {profileData.projects.map((project) => (
         <div class="project-item-wrapper" data-tags={project.tags.join(',').toLowerCase()}>
           <ProjectCard project={project} />
@@ -74,7 +74,7 @@ import ProjectCard from './ProjectCard.astro';
         projectWrappers.forEach(wrapper => {
           const tags = wrapper.getAttribute('data-tags') || '';
           if (filter === 'all' || tags.includes(filter)) {
-            (wrapper as HTMLElement).style.display = 'block';
+            (wrapper as HTMLElement).style.display = '';
           } else {
             (wrapper as HTMLElement).style.display = 'none';
           }

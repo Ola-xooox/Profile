@@ -32,20 +32,56 @@ const { project } = Astro.props;
       {project.description}
     </p>
 
-    <!-- Key Highlights / Architecture Contributions -->
-    <div class="mb-6 space-y-2">
-      <h4 class="text-xs font-mono uppercase tracking-wider text-neutral-500 font-bold mb-2">
-        // Key Architecture & Deliverables
-      </h4>
-      {project.highlights.map((highlight) => (
-        <div class="flex items-start gap-2 text-xs text-neutral-800 font-medium">
-          <svg class="w-4 h-4 text-black mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-          </svg>
-          <span>{highlight}</span>
-        </div>
-      ))}
-    </div>
+    <!-- Key Architecture Section -->
+    {project.architecture && project.architecture.length > 0 && (
+      <div class="mb-5 space-y-2">
+        <h4 class="text-xs font-mono uppercase tracking-wider text-neutral-500 font-bold mb-2">
+          // Key Architecture
+        </h4>
+        {project.architecture.map((item) => (
+          <div class="flex items-start gap-2 text-xs text-neutral-800 font-medium">
+            <svg class="w-4 h-4 text-black mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+            <span>{item}</span>
+          </div>
+        ))}
+      </div>
+    )}
+
+    <!-- Deliverables Section -->
+    {project.deliverables && project.deliverables.length > 0 && (
+      <div class="mb-6 space-y-2">
+        <h4 class="text-xs font-mono uppercase tracking-wider text-neutral-500 font-bold mb-2">
+          // Deliverables
+        </h4>
+        {project.deliverables.map((item) => (
+          <div class="flex items-start gap-2 text-xs text-neutral-800 font-medium">
+            <svg class="w-4 h-4 text-black mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+            <span>{item}</span>
+          </div>
+        ))}
+      </div>
+    )}
+
+    <!-- Highlights Section (Fallback) -->
+    {project.highlights && project.highlights.length > 0 && !project.architecture && !project.deliverables && (
+      <div class="mb-6 space-y-2">
+        <h4 class="text-xs font-mono uppercase tracking-wider text-neutral-500 font-bold mb-2">
+          // Key Contributions
+        </h4>
+        {project.highlights.map((highlight) => (
+          <div class="flex items-start gap-2 text-xs text-neutral-800 font-medium">
+            <svg class="w-4 h-4 text-black mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+            <span>{highlight}</span>
+          </div>
+        ))}
+      </div>
+    )}
   </div>
 
   <div>

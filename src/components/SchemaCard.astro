@@ -42,14 +42,6 @@ const { tableName, categoryName, primaryKey = "id_did_pk", items, class: classNa
           <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-white text-black border border-neutral-300 font-bold group-hover:border-black">
             {item.type}
           </span>
-          {item.vcHash && (
-            <span 
-              class="hidden sm:inline-block text-[9px] font-mono text-black bg-neutral-200 px-1.5 py-0.5 rounded border border-neutral-300 font-medium cursor-help transition-all"
-              title={`Verifiable Credential Hash: ${item.vcHash} (Verified ${item.verifiedAt})`}
-            >
-              VC: {item.vcHash}
-            </span>
-          )}
         </div>
       </div>
     ))}
