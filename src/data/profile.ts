@@ -9,6 +9,7 @@ export interface ProjectItem {
   id: string;
   title: string;
   description: string;
+  imageUrl?: string;
   tags: string[];
   highlights?: string[];
   architecture?: string[];
@@ -106,6 +107,7 @@ export const profileData: Web5Profile = {
       id: "🎓 0001",
       title: "Learning Management System",
       description: "A comprehensive Learning Management System with automated task scheduling and progress tracking for students.",
+      imageUrl: "/lms_preview.png",
       tags: ["Laravel", "PHP", "Python", "MySQL", "Tailwind"],
       architecture: [
         "Laravel & PHP: Core backend utilizing RESTful APIs and Eloquent ORM.",
@@ -126,6 +128,7 @@ export const profileData: Web5Profile = {
       id: "📚 0002",
       title: "Subject & Curriculum Management System",
       description: "An intuitive academic portal for organizing course curriculums and subject hierarchies.",
+      imageUrl: "/curriculum_preview.png",
       tags: ["Laravel", "PHP", "TailwindCSS", "MySQL", "REST APIs"],
       architecture: [
         "Laravel 12 & PHP 8.3: Secure backend framework using REST APIs and Eloquent ORM.",
@@ -149,6 +152,7 @@ export const profileData: Web5Profile = {
       id: "💊 0003",
       title: "Pharmacy Management Application",
       description: "A web application for inventory and operations management tailored to pharmacy workflows.",
+      imageUrl: "/pharmacy_preview.png",
       tags: ["PHP", "MySQL", "TailwindCSS"],
       architecture: [
         "Implemented Multi-Tier OTP authentication & Admin Login Approval workflow.",
