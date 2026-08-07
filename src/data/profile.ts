@@ -105,17 +105,18 @@ export const profileData: Web5Profile = {
     {
       id: "🎓 0001",
       title: "Learning Management System",
-      description: "A comprehensive LMS with automated task scheduling and progress tracking for students.",
+      description: "A comprehensive Learning Management System with automated task scheduling and progress tracking for students.",
       tags: ["Laravel", "PHP", "Python", "MySQL", "Tailwind"],
       architecture: [
-        "Designed automated task priority scoring based on deadlines and difficulty metrics.",
-        "Structured complex relational database schemas for tracking student performance and schedules.",
-        "Optimized backend queries for high-volume student progress tracking."
+        "Laravel & PHP: Core backend utilizing RESTful APIs and Eloquent ORM.",
+        "MySQL Database: Custom schema optimized for student tasks, priority scores, and progress metrics.",
+        "Tailwind CSS: Clean, responsive UI for task lists and activity management.",
+        "Task Scheduling Engine: Priority-score algorithm to dynamically evaluate assignment urgency and deadlines."
       ],
       deliverables: [
-        "Automated Task Priority Engine for intelligent deadline scheduling.",
-        "Relational Schema Architecture for performance analytics.",
-        "Student & Admin Dashboard with interactive performance tracking."
+        "Priority Task Engine: Custom backend logic calculating task urgency scores for student workloads.",
+        "Progress & Performance Metrics: Database tracking for assignment completion rates and student activities.",
+        "Coursework & Task Schema: Data models designed for structured assignments, schedules, and user management."
       ],
       demoUrl: "https://lms-demo.lhandel.dev",
       githubUrl: "https://github.com/lhandel-pamisa/learning-management-system",
